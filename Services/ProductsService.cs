@@ -24,8 +24,6 @@ namespace Services
                 throw new ArgumentNullException(nameof(product));
 
             _repository.Insert(product);
-            
         }
-
     }
 }

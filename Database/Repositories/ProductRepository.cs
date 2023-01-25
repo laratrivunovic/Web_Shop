@@ -1,25 +1,44 @@
 ﻿using Core.Abstractions.Repositories;
 using Core.Domain;
+using System.Data;
+using System.Text.Json;
 
 namespace Database.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly List<Proizvod> _products;
+        private readonly Dictionary<int, Proizvod> _products;
 
+        private int _id = 0;
         public ProductRepository()
         {
-            _products = new List<Proizvod>();
+            if (File.Exists("proizvodi.json"))
+            {
+                _products = JsonSerializer.Deserialize<Dictionary<int, Proizvod>>(File.ReadAllText("proizvodi.json"));
+            }
+            else
+            {
+                _products = new Dictionary<int, Proizvod>();
+            }
+
+            _id = _products.Count == 0 ? 0 : _products.Values.Select(p => p.Id).Max();
         }
 
         public List<Proizvod> GetAllProducts()
         {
-            return _products;
+            return _products.Values.ToList();
         }
 
         public void Insert(Proizvod product)
         {
-            _products.Add(product);
+            product.Id = ++_id;
+            _products.Add(product.Id, product);
+            SaveRepository();
+        }
+
+        public void SaveRepository()
+        {
+            File.WriteAllText("proizvodi.json", JsonSerializer.Serialize(_products));
         }
     }
 }

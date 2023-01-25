@@ -24,7 +24,7 @@ namespace WebShop.Controllers
                 Cena = productModel.Cena,
                 Ime = productModel.Ime,
                 Kategorija = productModel.Kategorija,
-                Opis = productModel.Opis
+                Opis = productModel.Opis,
             };
 
             _productService.InsertProduct(p);
