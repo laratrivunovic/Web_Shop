@@ -20,7 +20,7 @@ namespace WebShop
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddTransient<IProductsService, ProductsService>();
-            builder.Services.AddTransient<IProductRepository, ProductRepository>();
+            builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 
             var app = builder.Build();
 

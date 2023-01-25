@@ -12,6 +12,11 @@ namespace Database.Repositories
             _products = new List<Proizvod>();
         }
 
+        public List<Proizvod> GetAllProducts()
+        {
+            return _products;
+        }
+
         public void Insert(Proizvod product)
         {
             _products.Add(product);
